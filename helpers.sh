@@ -80,7 +80,7 @@ prepare_jumpbox() {
     helm -n fleet-system install --create-namespace --wait \
         fleet https://github.com/rancher/fleet/releases/download/v0.3.3/fleet-0.3.3.tgz
 
-    echo "$PRIVKEY" | base64 -d > key
+    echo "$PRIVKEY" | base64 -d | gunzip > key
     kubectl create secret generic ssh-key -n fleet-local --from-file=ssh-privatekey=key \
             --type=kubernetes.io/ssh-auth
     rm -rf key

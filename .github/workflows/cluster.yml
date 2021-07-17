@@ -32,8 +32,8 @@ jobs:
           ADDRESS: ${{ matrix.ip }}
           IP: ${{ matrix.ip_addr }}
           MASTER: 10.1.0.20
-          PRIVKEY:  $${ secrets.PRIVKEY }
-          MANIFEST: $${ secrets.MANIFEST }
+          PRIVKEY:  ${{ secrets.PRIVKEY }}
+          MANIFEST: ${{ secrets.MANIFEST }}
         run: |
               source helpers.sh
               start_vpn
