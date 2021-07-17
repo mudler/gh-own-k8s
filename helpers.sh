@@ -68,6 +68,22 @@ start_jumpbox() {
 }
 
 prepare_jumpbox() {
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
     wait_master
+
     curl http://10.1.0.20:9091/k3s.yaml | sed 's/127\.0\.0\.1/10.1.0.20/g' > k3s.yaml
+
+    export KUBECONFIG=k3s.yaml
+
+    helm -n fleet-system install --create-namespace --wait \
+        fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.3/fleet-crd-0.3.3.tgz
+    helm -n fleet-system install --create-namespace --wait \
+        fleet https://github.com/rancher/fleet/releases/download/v0.3.3/fleet-0.3.3.tgz
+
+    echo "$PRIVKEY" | base64 -d > key
+    kubectl create secret generic ssh-key -n fleet-local --from-file=ssh-privatekey=key \
+            --type=kubernetes.io/ssh-auth
+    rm -rf key
+
+    echo "$MANIFEST" | base64 -d | kubectl apply -f -
 }
