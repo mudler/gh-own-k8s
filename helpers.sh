@@ -76,9 +76,9 @@ prepare_jumpbox() {
     export KUBECONFIG=k3s.yaml
 
     helm -n fleet-system install --create-namespace --wait \
-        fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.3/fleet-crd-0.3.3.tgz
+        fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.8/fleet-crd-0.3.8.tgz
     helm -n fleet-system install --create-namespace --wait \
-        fleet https://github.com/rancher/fleet/releases/download/v0.3.3/fleet-0.3.3.tgz
+        fleet https://github.com/rancher/fleet/releases/download/v0.3.8/fleet-0.3.8.tgz
 
     echo "$PRIVKEY" | base64 -d | gunzip > key
     kubectl create secret generic ssh-key -n fleet-local --from-file=ssh-privatekey=key \
