@@ -58,7 +58,7 @@ start_agent() {
          export K3S_TOKEN=$( curl --silent -L http://$MASTER:9090/node-token )
 
          echo "Node token $K3S_TOKEN"
-         sudo -E k3s agent --server https://$MASTER:6443 --flannel-iface=edgevpn0 --node-ip $IP
+         sudo -E k3s agent --with-node-id --server https://$MASTER:6443 --flannel-iface=edgevpn0 --node-ip $IP
     done
     )
 }
