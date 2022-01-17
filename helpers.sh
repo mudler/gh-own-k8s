@@ -5,7 +5,7 @@ start_vpn() {
     sudo luet install -y repository/mocaccino-extra
     sudo luet install -y utils/edgevpn container/k3s
     echo "$EDGEVPN" | base64 -d > config.yaml
-    sudo -E EDGEVPNCONFIG=config.yaml IFACE=edgevpn0 edgevpn > /dev/null 2>&1 &
+    sudo -E EDGEVPNCONFIG=config.yaml IFACE=edgevpn0 edgevpn --api --log-level debug > vpn.txt 2>&1 &
 }
 
 wait_master() {
